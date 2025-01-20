@@ -4,50 +4,55 @@ import axios from 'axios';
 const Search = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState('');
-  const [loading, setLoading] = useState(false); // State for loading indication
-  const [error, setError] = useState(''); // State for error messages
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading state to true
-    setError(''); // Reset error state
-    setResult(''); // Clear previous results
+    setLoading(true);
+    setError('');
+    setResult('');
+
+    if (!query || query.trim() === '') {
+      setError('Please enter a valid search query.');
+      setLoading(false);
+      return;
+    }
 
     try {
+      console.log('Sending search query:', query);
       const response = await axios.post('http://localhost:5000/api/search', { query });
-      setResult(response.data.result); // assuming Gemini API sends the result in `result` key
+      console.log('Response received:', response.data);
+      setResult(response.data.result);
     } catch (error) {
-      console.error('Error fetching search result:', error);
-      setError('Error fetching results. Try again later.'); // Set error message
+      console.error('Error fetching search result:', error.response || error.message);
+      setError(error.response?.data?.error || 'Error fetching results. Try again later.');
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
   return (
-    <div className="h-[100vh] bg-gray-900 flex justify-center items-center">
-      <div className='w-[95%] h-[95%] max-w-lg p-8 rounded-xl shadow-xl bg-gray-800 border border-gray-700'>
-        <form className="w-full mb-8" onSubmit={handleSearch}>
-          <label className="mb-2 text-sm font-medium text-gray-300 sr-only dark:text-white" htmlFor="default-search">Search</label>
+    <div className="w-full mt-20 bg-gray-800 font-mono flex items-center justify-center">
+      <div className="md:w-[50%] w-[90%] p-8 bg-gray-900 rounded-3xl shadow-xl h-[90%]">
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 text-center mb-6">
+          Search with Aeron
+        </h1>
+        <form className="w-full mb-6" onSubmit={handleSearch}>
           <div className="relative flex items-center">
             <input
               required
               placeholder="Find answer with Aeron"
-              className="block w-full py-4 pl-4 pr-4 text-xl text-gray-100 border rounded-lg shadow-sm  focus:ring-yellow-500 focus:border-yellow-500 bg-gray-500 border-gray-600 placeholder-gray-100 dark:focus:ring-yellow-500 dark:focus:border-yellow-500 transition duration-300 ease-in-out"
+              className="w-full py-4 px-4 text-lg text-gray-100 rounded-lg border border-gray-600 bg-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none transition-all duration-300"
               id="default-search"
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              style={{
-                WebkitAppearance: 'none', // Ensure clear button is hidden in WebKit browsers
-                MozAppearance: 'none', // Ensure clear button is hidden in Firefox
-                outline: 'none' // Remove the default focus outline
-              }}
             />
             <button
-              className="ml-4 p-3 text-base font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:focus:ring-yellow-800 transition-all duration-300"
+              className="ml-4 px-5 py-3 text-lg font-medium text-white bg-yellow-600 rounded-lg hover:bg-yellow-700 focus:ring-2 focus:ring-yellow-500 focus:outline-none transition-all duration-300"
               type="submit"
-              disabled={loading} // Disable button while loading
+              disabled={loading}
             >
               {loading ? (
                 <svg
@@ -71,35 +76,32 @@ const Search = () => {
                   ></path>
                 </svg>
               ) : (
-                <span>
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      strokeWidth={2}
-                      strokeLinejoin="round"
-                      strokeLinecap="round"
-                      stroke="currentColor"
-                    />
-                  </svg>
-                  <span className="sr-only">Search</span>
-                </span>
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                >
+                  <path
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    strokeWidth={2}
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    stroke="currentColor"
+                  />
+                </svg>
               )}
             </button>
           </div>
         </form>
-        <div className="p-2 w-full md:h-[80%] h-[90%] bg-gray-700 rounded-lg shadow-inner">
-          <div className="w-full h-full overflow-auto bg-gray-800 p-6 rounded-lg border border-gray-600 shadow-md">
-            {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
+        <div className="p-4 bg-gray-800 rounded-lg shadow-inner border border-gray-700">
+          <div className="h-40 overflow-y-auto bg-gray-900 p-4 rounded-lg">
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             {loading ? (
-              <p className="text-yellow-500">Loading...</p> // Loading message
+              <p className="text-yellow-500 text-sm">Loading...</p>
             ) : (
-              <p className="text-white">{result}</p> // Display search result
+              <p className="text-slate-300 text-sm">{result}</p>
             )}
           </div>
         </div>

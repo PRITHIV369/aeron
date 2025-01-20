@@ -9,34 +9,29 @@ const Home = () => {
   };
 
   return (
-    <div className='w-full min-h-screen bg-gray-900 flex justify-center items-center'>
-      <div className='md:w-[50%] md:h-[70%] flex items-center flex-col gap-8 w-[90%] h-auto p-8 bg-gray-800 rounded-3xl shadow-2xl'>
-        {/* Header with a gradient effect */}
-        <b className='text-4xl text-yellow-400 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-300 tracking-wide'>
+    <div className="flex justify-center items-center h-[calc(100vh-64px)]">
+      <div className="md:w-[50%] md:h-[70%] flex items-center flex-col gap-10 w-[90%] h-auto p-10 bg-gray-900 rounded-3xl shadow-xl transform transition duration-500 hover:scale-105">
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 tracking-wide text-center">
           Hi, Welcome to Aeron
-        </b>
-        
-        {/* Paragraph with updated text styling */}
-        <p className='text-slate-200 text-justify md:text-[16px] text-[14px] leading-relaxed'>
+        </h1>
+        <p className="text-slate-300 text-justify md:text-lg text-md leading-relaxed px-4">
           The Answer Engine is designed to provide simple, clear responses to any question, ensuring that everyone can understand. It breaks down complex topics into easy-to-follow explanations. The engine is user-friendly and avoids unnecessary jargon or complicated language, making learning fun and engaging.
         </p>
-        
-        {/* Button with more dynamic effects */}
         <button
           onClick={handleStartClick}
-          type="submit"
-          className="flex justify-center gap-2 items-center mx-auto shadow-xl text-lg backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-yellow-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group bg-yellow-400"
+          type="button"
+          className="flex items-center justify-center gap-2 text-lg font-semibold text-gray-800 bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-orange-400 hover:to-red-500 px-6 py-3 rounded-full shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-110 focus:outline-none focus:ring focus:ring-yellow-400"
         >
           Let's Start
           <svg
-            className="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45"
-            viewBox="0 0 16 19"
+            className="w-6 h-6 transform transition-transform duration-300 group-hover:rotate-90"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-              className="fill-gray-800 group-hover:fill-gray-800"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
           </svg>
         </button>
       </div>
